@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../utils/app_colors.dart';
 import '../widgets/budgets/budget_list.dart';
+import '../services/budget_services.dart';
 
 class BudgetScreen extends StatefulWidget {
   const BudgetScreen({super.key});
@@ -11,14 +13,14 @@ class BudgetScreen extends StatefulWidget {
 }
 
 class _BudgetScreenState extends State<BudgetScreen> {
-  bool isVisible = false;
+  final budgetServices = BudgetServices().budgets;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Budget',
+          'Budgets',
           style: TextStyle(
             color: AppColors.whiteColor,
             fontSize: 25.0,
@@ -36,87 +38,75 @@ class _BudgetScreenState extends State<BudgetScreen> {
         child: Container(
           padding: const EdgeInsets.only(left: 15.0, right: 15.0, bottom: 20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 padding: const EdgeInsets.all(20.0),
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: const AssetImage('assets/images/credit-card-bg.png'),
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.3),
-                      BlendMode.multiply,
-                    ),
-                  ),
-                  borderRadius: BorderRadius.circular(10.0),
+                  color: AppColors.primaryColor.withOpacity(0.8),
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
-                child: Column(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Nkap Wallet Account'),
-                        Text(
-                          'Nkap',
-                          style: TextStyle(
-                            fontSize: 30.0,
-                            color: AppColors.whiteColor.withOpacity(0.7),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 40.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                        Text('You Bugeted', style: TextStyle(fontSize: 12.0)),
+                        const SizedBox(height: 10.0),
                         Row(
                           children: [
-                            Text(
-                              isVisible ? '12000 ' : '****** ',
-                              style: const TextStyle(
-                                fontSize: 25.0,
-                              ),
-                            ),
-                            const Text('FCFA'),
-                            IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  isVisible = !isVisible;
-                                });
-                              },
-                              icon: Icon(
-                                isVisible
-                                    ? Icons.visibility_off_outlined
-                                    : Icons.visibility_outlined,
-                                color: AppColors.whiteColor.withOpacity(0.7),
-                              ),
+                            Text('8000', style: TextStyle(fontSize: 32.0)),
+                            SizedBox(width: 5.0),
+                            Text('FCFA', style: TextStyle(fontSize: 12.0)),
+                          ],
+                        ),
+                        const SizedBox(height: 8.0),
+                        Row(
+                          children: [
+                            Column(
+                              children: [
+                                IconButton(
+                                  style: IconButton.styleFrom(
+                                    backgroundColor: AppColors.yellowColor,
+                                  ),
+                                  onPressed: () =>
+                                      Get.toNamed('/create-budget'),
+                                  icon: Icon(
+                                    Icons.add,
+                                    color: AppColors.whiteColor,
+                                  ),
+                                ),
+                                Text(
+                                  'Add budget',
+                                  style: TextStyle(fontSize: 8.0),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        const Text('(+237) 671236011')
                       ],
                     ),
+                    Icon(
+                      Icons.account_balance_wallet_outlined,
+                      size: 120.0,
+                      color: Colors.black.withOpacity(0.2),
+                    )
                   ],
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 20.0, bottom: 35.0),
-                child: const BudegtsList(),
+              Padding(
+                padding: const EdgeInsets.only(top: 40.0),
+                child: const Text(
+                  'Budgets History',
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
+              BudegtsList(
+                budgets: budgetServices,
               ),
             ],
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50.0),
-        ),
-        onPressed: () {},
-        child: const Icon(
-          Icons.attach_money_outlined,
-          color: AppColors.whiteColor,
         ),
       ),
     );

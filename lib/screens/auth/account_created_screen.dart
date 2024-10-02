@@ -23,7 +23,7 @@ class AccountCreatedScreen extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 20.0),
               child: CustomButton(
                 text: 'Back to login',
-                pressed: () => Get.offAll(const LoginScreen()),
+                pressed: () => Get.offAll(() => const LoginScreen()),
               ),
             ),
           ],

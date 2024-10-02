@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 
 import '../utils/app_colors.dart';
-import '../utils/form_validators.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final String hint;
   final TextInputType textInputType;
   final bool isPasswordField;
   final TextEditingController textEditingController;
-  final String? isValid;
+  final String? Function(String?)? validator;
+  // final String? Function(String?)? onChange;
   CustomTextFormField({
     required this.hint,
     required this.textInputType,
     required this.isPasswordField,
     required this.textEditingController,
-    required this.isValid,
+    required this.validator,
+    // required this.onChange,
     super.key,
   });
-
-  final validator = FormValidators();
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -33,10 +32,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       keyboardType: widget.textInputType,
       controller: widget.textEditingController,
       obscureText: widget.isPasswordField ? isVisible : false,
-      validator: (value) => widget.isValid,
-      onChanged: (context) => setState(() {
-        widget.isValid;
-      }),
+      validator: widget.validator,
+      // onChanged: widget.onChange,
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.darkBlueColor,

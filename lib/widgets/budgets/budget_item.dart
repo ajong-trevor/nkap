@@ -3,7 +3,17 @@ import 'package:flutter/material.dart';
 import '../../utils/app_colors.dart';
 
 class BudgetItem extends StatelessWidget {
-  const BudgetItem({super.key});
+  final String amount;
+  final String date;
+  final String month;
+  final String paymentOption;
+  const BudgetItem({
+    required this.amount,
+    required this.date,
+    required this.month,
+    required this.paymentOption,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,24 +50,24 @@ class BudgetItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50.0),
                 ),
                 child: const Icon(
-                  Icons.attach_money_outlined,
+                  Icons.account_balance_wallet_outlined,
                   color: AppColors.whiteColor,
                 ),
               ),
               const SizedBox(width: 10.0),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '15000 FCFA',
+                    '${amount} FCFA',
                     style: TextStyle(
                       color: AppColors.whiteColor,
                       fontSize: 24.0,
                     ),
                   ),
                   Text(
-                    'April',
+                    month,
                     style: TextStyle(
                       color: AppColors.grayColor,
                       fontSize: 12.0,
@@ -72,7 +82,7 @@ class BudgetItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '08/04/2024',
+                date,
                 style: TextStyle(
                   fontSize: 10.0,
                   color: AppColors.grayColor.withOpacity(
@@ -81,8 +91,8 @@ class BudgetItem extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10.0),
-              const Text(
-                'MTN MoMo',
+              Text(
+                paymentOption,
                 style: TextStyle(
                   fontSize: 10.0,
                   color: AppColors.secondaryColor,

@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Nkap',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Poppins',
         colorScheme: ColorScheme.fromSeed(
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.backgroundColor,
         useMaterial3: true,
       ),
-      initialRoute: '/',
+      initialRoute: '/login',
       getPages: appRoutes,
     );
   }

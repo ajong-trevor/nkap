@@ -5,6 +5,7 @@ import '../screens/auth/account_created_screen.dart';
 import '../screens/auth/otp_screen.dart';
 import '../screens/auth/signup_screen.dart';
 import '../widgets/custom_bottom_navigation.dart';
+import '../screens/create_budget_scree.dart';
 
 final appRoutes = [
   GetPage(
@@ -24,7 +25,12 @@ final appRoutes = [
     page: () => const OtpScreen(),
   ),
   GetPage(
-    name: '/accout-created',
+    name: '/account-created',
     page: () => const AccountCreatedScreen(),
+  ),
+  GetPage(
+    name: '/create-budget',
+    page: () => const CreateBudgetScree(),
+    fullscreenDialog: true,
   ),
 ];

@@ -3,7 +3,16 @@ import 'package:flutter/material.dart';
 import '../../utils/app_colors.dart';
 
 class ExpenseItem extends StatelessWidget {
-  const ExpenseItem({super.key});
+  final String item;
+  final String spendingType;
+  final String wantNeed;
+  final String amount;
+  const ExpenseItem(
+      {required this.amount,
+      required this.item,
+      required this.spendingType,
+      required this.wantNeed,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,19 +39,27 @@ class ExpenseItem extends StatelessWidget {
         vertical: 10.0,
         horizontal: 10.0,
       ),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Transportation'),
+          Text(item),
           Text(
-            'Variable',
-            style: TextStyle(color: AppColors.redColor),
+            spendingType,
+            style: TextStyle(
+              color: spendingType == 'Variable'
+                  ? AppColors.redColor
+                  : AppColors.greenColor,
+            ),
           ),
           Text(
-            'Need',
-            style: TextStyle(color: AppColors.yellowColor),
+            wantNeed,
+            style: TextStyle(
+              color: wantNeed == 'Need'
+                  ? AppColors.yellowColor
+                  : AppColors.primaryColor,
+            ),
           ),
-          Text('500 FCFA'),
+          Text('${amount} FCFA'),
         ],
       ),
     );

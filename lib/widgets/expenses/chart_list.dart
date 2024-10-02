@@ -47,12 +47,23 @@ class ChartList extends StatelessWidget {
                   width: 0.2,
                 ),
               ),
-              child: Center(
-                child: PieChart(
-                  dataMap: categoryDataMap,
-                  chartLegendSpacing: 20,
-                  chartRadius: MediaQuery.of(context).size.width / 2.2,
-                ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: Text(
+                      'Category Breakdown',
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                  ),
+                  Center(
+                    child: PieChart(
+                      dataMap: categoryDataMap,
+                      chartLegendSpacing: 20,
+                      chartRadius: MediaQuery.of(context).size.width / 2.2,
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20.0),
@@ -73,12 +84,23 @@ class ChartList extends StatelessWidget {
                   width: 0.2,
                 ),
               ),
-              child: Center(
-                child: PieChart(
-                  dataMap: typeDataMap,
-                  chartLegendSpacing: 20,
-                  chartRadius: MediaQuery.of(context).size.width / 2.2,
-                ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: Text(
+                      'Type Breakdown',
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                  ),
+                  Center(
+                    child: PieChart(
+                      dataMap: typeDataMap,
+                      chartLegendSpacing: 20,
+                      chartRadius: MediaQuery.of(context).size.width / 2.2,
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20.0),
@@ -99,12 +121,23 @@ class ChartList extends StatelessWidget {
                   width: 0.2,
                 ),
               ),
-              child: Center(
-                child: PieChart(
-                  dataMap: optionDataMap,
-                  chartLegendSpacing: 20,
-                  chartRadius: MediaQuery.of(context).size.width / 2.2,
-                ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: Text(
+                      'Want/Need Breakdown',
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                  ),
+                  Center(
+                    child: PieChart(
+                      dataMap: optionDataMap,
+                      chartLegendSpacing: 20,
+                      chartRadius: MediaQuery.of(context).size.width / 2.2,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

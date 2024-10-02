@@ -7,6 +7,7 @@ import '../../widgets/custom_button.dart';
 import '../../widgets/auth/auth_screens_header.dart';
 import '../../utils/form_validators.dart';
 import '../../services/auth_services.dart';
+import '../../utils/loader.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,9 +17,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _phoneEditingController = TextEditingController();
+  late TextEditingController _emailEditingController;
 
-  TextEditingController _passwordEditingController = TextEditingController();
+  late TextEditingController _passwordEditingController;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -26,15 +27,42 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final services = AuthServices();
 
+  late bool isLoading;
+
+  @override
+  void initState() {
+    _emailEditingController = TextEditingController();
+    _passwordEditingController = TextEditingController();
+    super.initState();
+    isLoading = false;
+  }
+
   void onLogin() {
     if (_formKey.currentState!.validate()) {
-      // print(_phoneEditingController.text);
-      // print(_passwordEditingController.text);
-      Get.toNamed('/otp');
-
+      services
+          .login(_emailEditingController.text, _passwordEditingController.text)
+          .then((user) {
+        isLoading = false;
+        Get.offAllNamed('/');
+        Get.snackbar(
+          'Logged In',
+          'You have been successfully logged in :)',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: AppColors.primaryColor.withOpacity(0.8),
+          colorText: AppColors.whiteColor,
+          duration: Duration(microseconds: 3000),
+        );
+      });
       _passwordEditingController = TextEditingController();
     }
     return;
+  }
+
+  @override
+  void dispose() {
+    _emailEditingController.dispose();
+    _passwordEditingController.dispose();
+    super.dispose();
   }
 
   @override
@@ -58,12 +86,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     CustomTextFormField(
-                      hint: 'Phone Number',
-                      textInputType: TextInputType.number,
+                      hint: 'Email',
+                      textInputType: TextInputType.emailAddress,
                       isPasswordField: false,
-                      textEditingController: _phoneEditingController,
-                      isValid: validator
-                          .phoneValidation(_phoneEditingController.text),
+                      textEditingController: _emailEditingController,
+                      validator: validator.emailValidation,
                     ),
                     const SizedBox(
                       height: 30.0,
@@ -73,8 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       textInputType: TextInputType.visiblePassword,
                       isPasswordField: true,
                       textEditingController: _passwordEditingController,
-                      isValid: validator
-                          .passwordValidation(_passwordEditingController.text),
+                      validator: validator.passwordValidation,
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 10.0),
@@ -91,9 +117,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     CustomButton(
                       text: 'Login',
-                      pressed: () => setState(() {
+                      pressed: () {
+                        setState(() {
+                          isLoading = true;
+                        });
                         onLogin();
-                      }),
+                        if (isLoading) {
+                          loader();
+                        }
+                      },
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

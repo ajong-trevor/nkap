@@ -4,19 +4,48 @@ import 'package:get/get.dart';
 import '../utils/app_colors.dart';
 import '../widgets/expenses/expenses_list.dart';
 import '../widgets/expenses/chart_list.dart';
-import '../services/auth_services.dart';
 import '../widgets/custom_text_form_field.dart';
 import '../utils/form_validators.dart';
 import '../widgets/custom_button.dart';
+import '../services/expense_services.dart';
+import '../widgets/custom_dropdown_menu.dart';
 
-class ExpenseScreen extends StatelessWidget {
+class ExpenseScreen extends StatefulWidget {
   const ExpenseScreen({super.key});
 
   @override
+  State<ExpenseScreen> createState() => _ExpenseScreenState();
+}
+
+class _ExpenseScreenState extends State<ExpenseScreen> {
+  final expenses = ExpenseServices().expenses;
+
+  @override
+  void initState() {
+    print(expenses);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final service = AuthServices();
     final formValidator = FormValidators();
     final _itemTextEditingController = TextEditingController();
+    final _amountTextEditingController = TextEditingController();
+
+    final List<String> categories = <String>[
+      'Transportation',
+      'Feeding',
+      'Subscription',
+      'Travel',
+      'Eating Out',
+      'Drinks',
+      'Health',
+      'Groceries'
+    ];
+
+    final List<String> type = <String>['Varaible', 'Fixed'];
+
+    final List<String> wantNeed = <String>['Want', 'Need'];
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -75,7 +104,9 @@ class ExpenseScreen extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: const ExpensesList(),
+                child: ExpensesList(
+                  expenses: expenses,
+                ),
               ),
               const ChartList(),
             ],
@@ -102,41 +133,18 @@ class ExpenseScreen extends StatelessWidget {
                     textInputType: TextInputType.text,
                     isPasswordField: false,
                     textEditingController: _itemTextEditingController,
-                    isValid: formValidator
-                        .nameValidation(_itemTextEditingController.text),
+                    validator: formValidator.nameValidation,
                   ),
                   CustomTextFormField(
-                    hint: 'Item',
-                    textInputType: TextInputType.text,
+                    hint: 'Amount',
+                    textInputType: TextInputType.number,
                     isPasswordField: false,
-                    textEditingController: _itemTextEditingController,
-                    isValid: formValidator
-                        .nameValidation(_itemTextEditingController.text),
+                    textEditingController: _amountTextEditingController,
+                    validator: formValidator.nameValidation,
                   ),
-                  CustomTextFormField(
-                    hint: 'Item',
-                    textInputType: TextInputType.text,
-                    isPasswordField: false,
-                    textEditingController: _itemTextEditingController,
-                    isValid: formValidator
-                        .nameValidation(_itemTextEditingController.text),
-                  ),
-                  CustomTextFormField(
-                    hint: 'Item',
-                    textInputType: TextInputType.text,
-                    isPasswordField: false,
-                    textEditingController: _itemTextEditingController,
-                    isValid: formValidator
-                        .nameValidation(_itemTextEditingController.text),
-                  ),
-                  CustomTextFormField(
-                    hint: 'Item',
-                    textInputType: TextInputType.text,
-                    isPasswordField: false,
-                    textEditingController: _itemTextEditingController,
-                    isValid: formValidator
-                        .nameValidation(_itemTextEditingController.text),
-                  ),
+                  CustomDropdownMenu(list: categories, hint: 'Category'),
+                  CustomDropdownMenu(list: type, hint: 'Type'),
+                  CustomDropdownMenu(list: wantNeed, hint: 'Want/Need'),
                   CustomButton(
                     pressed: () {},
                     text: 'Add Expense',

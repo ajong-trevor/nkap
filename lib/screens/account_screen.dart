@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../utils/app_colors.dart';
 
@@ -158,7 +159,7 @@ class AccountScreen extends StatelessWidget {
               ),
               const SizedBox(height: 30.0),
               GestureDetector(
-                onTap: () => print('Sign out tapped'),
+                onTap: () => Get.offAllNamed('/login'),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20.0,

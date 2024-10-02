@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../utils/app_colors.dart';
-import 'expense_item.dart';
+import './expense_item.dart';
+import '../../models/expense_model.dart';
 
 class DailyExpense extends StatelessWidget {
-  const DailyExpense({super.key});
+  final String date;
+  final List<ExpenseModel> expense;
+  const DailyExpense({required this.date, required this.expense, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +21,22 @@ class DailyExpense extends StatelessWidget {
           decoration: BoxDecoration(
               color: AppColors.secondaryColor,
               borderRadius: BorderRadius.circular(50.0)),
-          child: const Text('Today'),
+          child: Text(
+              date == DateFormat.yMd().format(DateTime.now()) ? 'Today' : date),
         ),
         Container(
           margin: const EdgeInsets.only(top: 5.0),
           child: ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 5,
+            itemCount: expense.length,
             itemBuilder: (context, index) {
-              return const ExpenseItem();
+              return ExpenseItem(
+                amount: expense[index].amount,
+                item: expense[index].item,
+                spendingType: expense[index].spendingType,
+                wantNeed: expense[index].wantNeed,
+              );
             },
           ),
         ),

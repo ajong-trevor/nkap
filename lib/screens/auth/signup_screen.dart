@@ -42,7 +42,7 @@ class _SignupScreenState extends State<SignupScreen> {
       )
           .then((user) {
         print('User created successfully');
-        // Get.offAllNamed('/accout-created');
+        Get.offAllNamed('/account-created');
       });
     }
     return;
@@ -74,9 +74,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       textInputType: TextInputType.name,
                       isPasswordField: false,
                       textEditingController: _nameEditingController,
-                      isValid: validator.nameValidation(
-                        _nameEditingController.text,
-                      ),
+                      validator: validator.nameValidation,
                     ),
                     const SizedBox(
                       height: 20.0,
@@ -86,9 +84,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       textInputType: TextInputType.emailAddress,
                       isPasswordField: false,
                       textEditingController: _emailEditingController,
-                      isValid: validator.emailValidation(
-                        _emailEditingController.text,
-                      ),
+                      validator: validator.emailValidation,
                     ),
                     const SizedBox(
                       height: 20.0,
@@ -98,9 +94,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       textInputType: TextInputType.number,
                       isPasswordField: false,
                       textEditingController: _phoneEditingController,
-                      isValid: validator.phoneValidation(
-                        _phoneEditingController.text,
-                      ),
+                      validator: validator.phoneValidation,
                     ),
                     const SizedBox(
                       height: 20.0,
@@ -110,9 +104,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       textInputType: TextInputType.visiblePassword,
                       isPasswordField: true,
                       textEditingController: _passwordEditingController,
-                      isValid: validator.passwordValidation(
-                        _passwordEditingController.text,
-                      ),
+                      validator: validator.passwordValidation,
                     ),
                     const SizedBox(
                       height: 20.0,
@@ -122,10 +114,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       textInputType: TextInputType.visiblePassword,
                       isPasswordField: true,
                       textEditingController: _confirmPasswordEditingController,
-                      isValid: validator.confrimPasswordValidation(
-                        _confirmPasswordEditingController.text,
-                        _passwordEditingController.text,
-                      ),
+                      validator: validator.confrimPasswordValidation,
                     ),
                     CustomButton(
                       text: 'Sign up',

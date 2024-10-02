@@ -36,13 +36,13 @@ class FormValidators {
     return null;
   }
 
-  String? confrimPasswordValidation(String? value, String password) {
+  String? confrimPasswordValidation(String? value) {
     if (value!.isEmpty) {
       return 'Confrim password required';
     }
-    if (value != password) {
-      return "Password don't match";
-    }
+    // if (value != password) {
+    //   return "Password don't match";
+    // }
     return null;
   }
 }
